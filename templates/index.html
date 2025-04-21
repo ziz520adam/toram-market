@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>Toram Market 市場紀錄</title>
+    <style>
+        body {
+            font-family: "微軟正黑體", sans-serif;
+            background-color: #f5f5f5;
+            margin: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3436;
+        }
+        form, table {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background: #636e72;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f0f0f0;
+        }
+        .delete {
+            color: red;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🛒 Toram Market 市場紀錄</h1>
+
+<form action="/add" method="POST">
+    <label>分類與商品：</label><br>
+    <select name="item" required>
+        {% for category, items in item_groups.items() %}
+        <optgroup label="{{ category }}">
+            {% for i in items %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </optgroup>
+        {% endfor %}
+    </select><br>
+
+    <label>數量：</label>
+    <input type="number" name="quantity" required><br>
+
+    <label>價格：</label>
+    <input type="text" name="price" required><br>
+
+    <label>備註：</label>
+    <input type="text" name="note"><br>
+
+    <button type="submit">✅ 新增紀錄</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>商品</th>
+            <th>數量</th>
+            <th>價格</th>
+            <th>備註</th>
+            <th>時間</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in records %}
+        <tr>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[3] }}</td>
+            <td>{{ r[4] }}</td>
+            <td>{{ r[5] }}</td>
+            <td><a class="delete" href="/delete/{{ r[0] }}">刪除</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
