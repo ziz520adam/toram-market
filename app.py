@@ -68,6 +68,5 @@ def delete(id):
     conn.close()
     return redirect("/")
 
-if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+# ✅ 保證不管本地還是 Render 都會初始化 DB
+init_db()
